@@ -9,10 +9,16 @@ namespace SimpleBlockchainApp
             Console.WriteLine("Simple Blockchain now starting...");
 
             var blockchain = new Blockchain();
-            Console.WriteLine("Mining block #1...");
-            blockchain.AddBlock(new Block(1, DateTime.Now, new{ User = "Demo User", Amount = 4.0 }));
-            Console.WriteLine("Mining block #2...");
-            blockchain.AddBlock(new Block(2, DateTime.Now, new{ User = "Demo User 2", Amount = 8.0 }));
+            blockchain.CreateTransaction(new Transaction("user1", "user2", 100));
+            blockchain.CreateTransaction(new Transaction("user2", "user1", 50));
+
+            System.Console.WriteLine("Starting the miner...");
+            blockchain.MinePendingTransactions("miner");
+            System.Console.WriteLine($"Balance of the miner is {blockchain.GetBalanceOfAddress("miner")}");
+
+            System.Console.WriteLine("Starting the miner...again");
+            blockchain.MinePendingTransactions("miner");
+            System.Console.WriteLine($"Balance of the miner is {blockchain.GetBalanceOfAddress("miner")}");
         }
     }
 }
