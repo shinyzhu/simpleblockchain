@@ -12,6 +12,7 @@ namespace SimpleBlockchainApp
         public object Data { get; set; }
         public string PreviousHash { get; set; }
         public string Hash { get; set; }
+        public int Nonce { get; set; }
 
         public Block(int index, DateTime timestamp,object data, string previousHash="")
         {
@@ -21,6 +22,8 @@ namespace SimpleBlockchainApp
             this.PreviousHash=  previousHash;
 
             this.Hash = CalculateHash();
+
+            this.Nonce = 0;
         }
 
         public string CalculateHash()
@@ -35,9 +38,22 @@ namespace SimpleBlockchainApp
             return hash;
         }
 
+        public void MineBlock(int difficulty)
+        {
+            while (this.Hash.Substring(0, difficulty) != 0.ToString($"D{difficulty}"))
+            {
+                this.Nonce++;
+                this.Hash = this.CalculateHash();
+
+                Console.WriteLine($"[{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffffff")}] Mining: {this.Hash} nonce={this.Nonce}");
+            }
+
+            Console.WriteLine($"Block mined: {this.Hash}");
+        }
+
         public override string ToString()
         {
-            return $"{this.Index}{this.PreviousHash}{this.Timestamp}{JsonConvert.SerializeObject(this.Data)}";
+            return $"{this.Index}{this.PreviousHash}{this.Timestamp}{JsonConvert.SerializeObject(this.Data)}{this.Nonce}";
         }
     }
 }

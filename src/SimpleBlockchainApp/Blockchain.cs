@@ -8,12 +8,16 @@ namespace SimpleBlockchainApp
     public class Blockchain : IEnumerable<Block>
     {
         public List<Block> Chain { get; private set; }
+
+        public int Difficulty { get; set; }
     
-        public Blockchain()
+        public Blockchain(int difficulty = 2)
         {
             this.Chain = new List<Block>();
 
             this.Chain.Add(CreateGenesisBlock());
+
+            this.Difficulty = difficulty;
         }
 
         private Block CreateGenesisBlock()
@@ -29,7 +33,7 @@ namespace SimpleBlockchainApp
         public void AddBlock(Block block)
         {
             block.PreviousHash = this.GetLatestBlock()?.Hash;
-            block.Hash = block.CalculateHash();
+            block.MineBlock(this.Difficulty);
 
             this.Chain.Add(block);
         }
