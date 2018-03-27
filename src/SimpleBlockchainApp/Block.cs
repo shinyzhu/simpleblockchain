@@ -14,7 +14,7 @@ namespace SimpleBlockchainApp
         public string Hash { get; set; }
         public int Nonce { get; set; }
 
-        public Block(int index, DateTime timestamp,object data, string previousHash="")
+        public Block(int index, DateTime timestamp, object data, string previousHash = "")
         {
             this.Index = index;
             this.Timestamp = timestamp;

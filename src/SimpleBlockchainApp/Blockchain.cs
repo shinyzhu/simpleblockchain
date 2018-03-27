@@ -11,7 +11,7 @@ namespace SimpleBlockchainApp
 
         public int Difficulty { get; set; }
     
-        public Blockchain(int difficulty = 2)
+        public Blockchain(int difficulty = 5)
         {
             this.Chain = new List<Block>();
 
